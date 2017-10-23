@@ -2,10 +2,13 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { throttle } from 'lodash';
 import marked from 'marked';
+import highlight from 'highlight.js';
+
 marked.setOptions({
   gfm: true,
   tables: true,
   breaks: true,
+  highlight: code => highlight.highlightAuto(code).value,
 });
 
 import article from './index.md';
@@ -48,6 +51,7 @@ export default class Canvas extends React.Component {
         <Helmet>
           <title>VEDA.js - Shader Art Framework</title>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css" />
         </Helmet>
         <style jsx>{`
           .body {
@@ -86,7 +90,8 @@ export default class Canvas extends React.Component {
           }
           pre {
             padding: 10px;
-            background: #333;
+            background: #000;
+            font-family: monospace;
           }
         `}</style>
         <div className="body">
