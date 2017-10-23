@@ -8,6 +8,11 @@
 </div>
 
 
+## What is VEDA.js?
+
+VEDA.js is a GLSL engine created for [VEDA](https://atom.io/packages/veda), a VJ app for Atom.
+
+
 ## Install
 
 ```

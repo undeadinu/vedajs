@@ -1,4 +1,3 @@
-
 module.exports = {
   webpack(config) {
     // Workaround for build error caused by UglifyJs.
@@ -9,7 +8,6 @@ module.exports = {
       }
       return true;
     });
-    // return config;
 
     const rulesExceptBabelLoaderRule = config.module.rules.slice(0, -1);
     const babelLoaderRule = config.module.rules.slice(-1)[0];

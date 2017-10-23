@@ -1,4 +1,4 @@
 {
     "presets": ["next/babel"],
-    "plugins": [["inline-import", { "extensions": [".md"] }]],
+    "plugins": [["inline-import", { "extensions": [".md", ".frag", ".vert"] }]],
 }

@@ -9,6 +9,7 @@ marked.setOptions({
 });
 
 import article from './index.md';
+import shader from './index.frag';
 const articleHtml = marked(article);
 
 export default class Canvas extends React.Component {
@@ -19,17 +20,7 @@ export default class Canvas extends React.Component {
       frameskip: 2,
     });
     this.veda.setCanvas(this.canvas);
-    this.veda.loadFragmentShader(`
-      precision mediump float;
-      uniform float time;
-      uniform vec2 mouse;
-      uniform vec2 resolution;
-
-      void main() {
-        vec2 uv = gl_FragCoord.xy / resolution.xy;
-        gl_FragColor = vec4(uv,0.5+0.5*sin(time),1.0);
-      }
-    `);
+    this.veda.loadFragmentShader(shader);
     this.veda.play();
 
     window.addEventListener('resize', this.resize);
@@ -55,6 +46,7 @@ export default class Canvas extends React.Component {
     return (
       <div>
         <Helmet>
+          <title>VEDA.js - Shader Art Framework</title>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
         </Helmet>
         <style jsx>{`
@@ -84,6 +76,10 @@ export default class Canvas extends React.Component {
           }
         `}</style>
         <style global jsx>{`
+          a, a:visited, a:hover {
+            color: white;
+            font-weight: bold;
+          }
           body {
             margin: 0;
             padding: 0;
