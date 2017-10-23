@@ -1,7 +1,82 @@
-<!DOCTYPE html><html><head><link rel="preload" href="/_next/316629e7-dc90-4cf2-ba8b-23bbf0eb62e2/page/index.js" as="script"/><link rel="preload" href="/_next/316629e7-dc90-4cf2-ba8b-23bbf0eb62e2/page/_error/index.js" as="script"/><link rel="preload" href="/_next/3cfe164465df3fc512cb1d195e177971/app.js" as="script"/><meta charSet="utf-8" class="next-head"/><style id="__jsx-1172758373">.body.jsx-1969170602{position:absolute;z-index:2;text-align:center;width:100%;color:white;text-shadow:0 0 10px #000;}
-.container.jsx-1969170602{position:fixed;height:100%;width:100%;background:black;}
-.canvas.jsx-1969170602{position:absolute;height:100%;width:100%;opacity:0.5;}</style><style id="__jsx-2169926502">body{margin:0;padding:0;}</style></head><body><div><div id="__next"><div data-reactroot=""><div class="jsx-1969170602"><div class="jsx-1969170602 body"><h1 class="jsx-1969170602">VEDA</h1><h3 class="jsx-1969170602">Shader Art Framework</h3></div><div class="jsx-1969170602 container"><canvas class="jsx-1969170602 canvas"></canvas></div></div></div></div><div id="__next-error"></div></div><div><script>
-          __NEXT_DATA__ = {"props":{},"pathname":"/","query":{},"buildId":"316629e7-dc90-4cf2-ba8b-23bbf0eb62e2","buildStats":{"app.js":{"hash":"3cfe164465df3fc512cb1d195e177971"}},"assetPrefix":"","nextExport":true,"err":null,"chunks":[]}
+<!DOCTYPE html><html><head><link rel="preload" href="/_next/ff61d6ea-cc69-4b43-9ac8-1f8397bc9405/page/index.js" as="script"/><link rel="preload" href="/_next/ff61d6ea-cc69-4b43-9ac8-1f8397bc9405/page/_error/index.js" as="script"/><link rel="preload" href="/_next/d04a5cf181fac9021485765663f6ea5f/app.js" as="script"/><meta charSet="utf-8" class="next-head"/><style id="__jsx-600448362">.body.jsx-2477127157{position:absolute;z-index:2;width:100%;}
+article.jsx-2477127157{width:600px;max-width:90%;margin:0 auto;color:white;text-shadow:0 0 10px #000;}
+.container.jsx-2477127157{position:fixed;height:100%;width:100%;background:black;}
+.canvas.jsx-2477127157{position:absolute;height:100%;width:100%;opacity:0.5;}</style><style id="__jsx-1981998006">body{margin:0;padding:0;}
+pre{padding:10px;background:#333;}</style></head><body><div><div id="__next"><div data-reactroot=""><div class="jsx-2477127157"><div class="jsx-2477127157 body"><article class="jsx-2477127157"><div align="center"><br>  <img alt="logo" src="https://user-images.githubusercontent.com/1403842/28923702-d8155d46-7899-11e7-817b-1193d138e5b8.png" width="192"/><br><br>  <h1>VEDA.js</h1><br>  <i>Shader Art Framework</i><br><br>  <img src="https://img.shields.io/npm/v/vedajs.svg" alt="npm version"> <img src="https://img.shields.io/npm/l/vedajs.svg" alt="license MIT"> <a href="https://twitter.com/search?f=tweets&amp;q=%23vedajs&amp;src=typd"><img src="https://img.shields.io/badge/hashtag-vedajs-blue.svg" alt="hashtag #vedajs"></a><br></div>
+
+
+<h2 id="install">Install</h2>
+<pre><code>npm install vedajs
+</code></pre><h2 id="usage">Usage</h2>
+<pre><code class="lang-js">import Veda from &#39;vedajs&#39;;
+
+const veda = new Veda();
+
+veda.setCanvas(canvas);
+veda.loadFragmentShader(code);
+
+veda.play();
+</code></pre>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="fragment-shader">Fragment shader</h3>
+<pre><code class="lang-js">veda.loadFragmentShader(code);
+</code></pre>
+<p>This is equivalent to</p>
+<pre><code class="lang-js">veda.loadShader({ fs: code });
+</code></pre>
+<h3 id="vertex-shader">Vertex shader</h3>
+<pre><code class="lang-js">veda.loadVertexShader(code);
+</code></pre>
+<p>This is equivalent to</p>
+<pre><code class="lang-js">veda.loadShader({ vs: code });
+</code></pre>
+<h3 id="using-both">Using both</h3>
+<p>Pass a shader object to <code>loadShader</code>.</p>
+<pre><code class="lang-js">veda.loadShader({
+  vs: vertexShaderCode,
+  fs: fragmentShaderCode,
+});
+</code></pre>
+<h3 id="multipath-rendering">Multipath rendering</h3>
+<p>Pass an array of shaders to <code>loadShader</code>.</p>
+<pre><code class="lang-js">veda.loadShader([{
+  vs: vertexShaderFor1stPass,
+  fs: fragmentShaderFor1stPass
+}, {
+  fs: fragmentShaderFor2ndPass
+}]);
+</code></pre>
+<h3 id="audio-input">Audio input</h3>
+<pre><code class="lang-js">veda.toggleAudio(true);
+veda.loadShader(shader);
+</code></pre>
+<h3 id="midi-input">MIDI input</h3>
+<pre><code class="lang-js">veda.toggleMidi(true);
+veda.loadShader(shader);
+</code></pre>
+<h3 id="webcam-input">WebCam input</h3>
+<pre><code class="lang-js">veda.toggleCamera(true);
+veda.loadShader(shader);
+</code></pre>
+<h2 id="keyboard-input">Keyboard input</h2>
+<pre><code class="lang-js">veda.toggleKeyboard(true);
+veda.loadShader(shader);
+</code></pre>
+<h2 id="gamepad-input">Gamepad input</h2>
+<pre><code class="lang-js">veda.toggleGamepad(true);
+veda.loadShader(shader);
+</code></pre>
+<h2 id="author">Author</h2>
+<p>Takayosi Amagi</p>
+<ul>
+<li>Website: <a href="https://gmork.in">gmork.in</a></li>
+<li>Twitter: <a href="https://twitter.com/amagitakayosi">@amagitakayosi</a></li>
+<li>GitHub: <a href="https://github.com/fand">fand</a></li>
+</ul>
+<h2 id="license">LICENSE</h2>
+<p>MIT</p>
+</article></div><div class="jsx-2477127157 container"><canvas class="jsx-2477127157 canvas"></canvas></div></div></div></div><div id="__next-error"></div></div><div><script>
+          __NEXT_DATA__ = {"props":{},"pathname":"/","query":{},"buildId":"ff61d6ea-cc69-4b43-9ac8-1f8397bc9405","buildStats":{"app.js":{"hash":"d04a5cf181fac9021485765663f6ea5f"}},"assetPrefix":"","nextExport":true,"err":null,"chunks":[]}
           module={}
           __NEXT_LOADED_PAGES__ = []
           __NEXT_LOADED_CHUNKS__ = []
@@ -13,4 +88,4 @@
           __NEXT_REGISTER_CHUNK = function (chunkName, fn) {
             __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })
           }
-        </script><script async="" id="__NEXT_PAGE__/" type="text/javascript" src="/_next/316629e7-dc90-4cf2-ba8b-23bbf0eb62e2/page/index.js"></script><script async="" id="__NEXT_PAGE__/_error" type="text/javascript" src="/_next/316629e7-dc90-4cf2-ba8b-23bbf0eb62e2/page/_error/index.js"></script><div></div><script type="text/javascript" src="/_next/3cfe164465df3fc512cb1d195e177971/app.js" async=""></script></div></body></html>
+        </script><script async="" id="__NEXT_PAGE__/" type="text/javascript" src="/_next/ff61d6ea-cc69-4b43-9ac8-1f8397bc9405/page/index.js"></script><script async="" id="__NEXT_PAGE__/_error" type="text/javascript" src="/_next/ff61d6ea-cc69-4b43-9ac8-1f8397bc9405/page/_error/index.js"></script><div></div><script type="text/javascript" src="/_next/d04a5cf181fac9021485765663f6ea5f/app.js" async=""></script></div></body></html>

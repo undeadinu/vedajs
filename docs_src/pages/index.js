@@ -1,10 +1,23 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { throttle } from 'lodash';
+import marked from 'marked';
+marked.setOptions({
+  gfm: true,
+  tables: true,
+  breaks: true,
+});
+
+import article from './index.md';
+const articleHtml = marked(article);
 
 export default class Canvas extends React.Component {
   componentDidMount() {
     const Veda = require('vedajs');
-    this.veda = new Veda();
+    this.veda = new Veda({
+      pixelRatio: 2,
+      frameskip: 2,
+    });
     this.veda.setCanvas(this.canvas);
     this.veda.loadFragmentShader(`
       precision mediump float;
@@ -41,12 +54,19 @@ export default class Canvas extends React.Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        </Helmet>
         <style jsx>{`
           .body {
             position: absolute;
             z-index: 2;
-            text-align: center;
             width: 100%;
+          }
+          article {
+            width: 600px;
+            max-width: 90%;
+            margin: 0 auto;
             color: white;
             text-shadow: 0 0 10px #000;
           }
@@ -68,10 +88,13 @@ export default class Canvas extends React.Component {
             margin: 0;
             padding: 0;
           }
+          pre {
+            padding: 10px;
+            background: #333;
+          }
         `}</style>
         <div className="body">
-          <h1>VEDA</h1>
-          <h3>Shader Art Framework</h3>
+          <article dangerouslySetInnerHTML={{ __html: articleHtml }}/>
         </div>
         <div className="container" ref={this.setContainer}>
           <canvas className="canvas" ref={this.setCanvas}/>
