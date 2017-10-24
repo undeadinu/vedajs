@@ -1,12 +1,15 @@
 import Layout from '../components/layout';
-import body from './index.md';
-import shader from './index.frag';
+import body from './audio.md';
+import shader from './audio.frag';
 
 const attach = veda => {
+  veda.toggleAudio(true);
   veda.loadFragmentShader(shader);
 };
 
-const detach = () => {};
+const detach = veda => {
+  veda.toggleAudio(false);
+};
 
 const article = { body, attach, detach };
 

@@ -13,7 +13,6 @@ marked.setOptions({
 });
 
 export default class Layout extends React.Component {
-
   constructor(props) {
     super(props);
     this.html = marked(props.article.body);
@@ -22,24 +21,19 @@ export default class Layout extends React.Component {
   componentDidMount() {
     const Veda = require('vedajs');
     this.veda = new Veda({
-      pixelRatio: 2,
-      frameskip: 2,
+      pixelRatio: 3,
+      frameskip: 3,
     });
     this.veda.setCanvas(this.canvas);
-    this.veda.loadFragmentShader(this.props.article.shader);
     this.veda.play();
-
+    this.props.article.attach(this.veda);
     window.addEventListener('resize', this.resize);
   }
 
   componentWillUnmount() {
     this.veda.stop();
+    this.props.article.detach(this.veda);
     window.removeEventListener('resize', this.resize);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.html = marked(nextProps.article.body);
-    console.log(this.html);
   }
 
   resize = throttle(() => {
