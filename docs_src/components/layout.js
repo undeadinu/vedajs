@@ -107,6 +107,7 @@ export default class Layout extends React.Component {
           <ul>
             <li><Link href="/"><a>Top</a></Link></li>
             <li><Link href="/audio"><a>Audio Input</a></Link></li>
+            <li><Link href="/webcam"><a>WebCam Input</a></Link></li>
           </ul>
         </nav>
         <div className="body">
