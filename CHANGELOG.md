@@ -1,3 +1,6 @@
+### 0.5.2
+* Support audio files for `loadTexture()`
+
 ### 0.5.0
 * Support sound shaders
 
