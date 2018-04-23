@@ -9,6 +9,8 @@ interface IConstructable<T> {
 }
 const MTLLoader: IConstructable<THREE.MTLLoader> = require('three-mtl-loader'); // tslint:disable-line
 
+const GLTFLoader = require('three-gltf-loader');
+
 interface ICache {
     url: string;
     obj: THREE.Object3D;
@@ -26,6 +28,14 @@ const extractPaths = (url: string) => {
     };
 };
 
+const isMesh = (x: any): x is THREE.Mesh => {
+    return x.type && x.type === 'Mesh';
+};
+
+const isSkinnedMesh = (x: any): x is THREE.SkinnedMesh => {
+    return x.type && x.type === 'SkinnedMesh';
+};
+
 export default class ModelLoader {
     private cache: { [url: string]: ICache | null } = {};
 
@@ -33,6 +43,7 @@ export default class ModelLoader {
     private mtlLoader = new MTLLoader();
     private objectLoader = new THREE.ObjectLoader();
     private jsonLoader = new THREE.JSONLoader();
+    private gltfLoader = new GLTFLoader();
 
     async load(model: IPassModel): Promise<THREE.Object3D> {
         const url = model.PATH;
@@ -48,6 +59,8 @@ export default class ModelLoader {
             obj = await this.loadObjAndMtl(model);
         } else if (/\.js(on)?\/?$/.test(url)) {
             obj = await this.loadJson(model);
+        } else if (/\.gltf\/?$/.test(url)) {
+            obj = await this.loadGltf(model);
         } else {
             throw new TypeError('Unsupported model URL: ' + url);
         }
@@ -83,15 +96,6 @@ export default class ModelLoader {
                 setTimeout(() => reject('Request Timeout'), 50000);
             }),
         ]);
-
-        if (
-            obj instanceof THREE.Mesh &&
-            obj.geometry instanceof THREE.Geometry
-        ) {
-            obj.geometry = new THREE.BufferGeometry().fromGeometry(
-                obj.geometry,
-            );
-        }
 
         const group = new THREE.Group();
         group.add(obj);
@@ -129,11 +133,29 @@ export default class ModelLoader {
         });
     }
 
+    private loadGltf(model: IPassModel): Promise<THREE.Group> {
+        return new Promise((resolve, reject) => {
+            this.gltfLoader.load(model.PATH, resolve, undefined, reject);
+        }).then((gltf: any) => {
+            console.log('>>', gltf.scene.children[0]);
+            return gltf.scene.children[0];
+        });
+    }
+
     private fixObj(obj: THREE.Object3D) {
         let box: THREE.Box3 | null = null;
         obj.traverse(o => {
             if (
-                o instanceof THREE.Mesh &&
+                (isMesh(o) || isSkinnedMesh(o)) &&
+                o.geometry instanceof THREE.Geometry
+            ) {
+                o.geometry = new THREE.BufferGeometry().fromGeometry(
+                    o.geometry,
+                );
+            }
+
+            if (
+                (isMesh(o) || isSkinnedMesh(o)) &&
                 o.geometry instanceof THREE.BufferGeometry
             ) {
                 o.geometry.computeBoundingBox();
@@ -157,10 +179,19 @@ export default class ModelLoader {
         const offset = sphere.center;
 
         obj.traverse(o => {
+            console.log(
+                '??',
+                o.type,
+                isMesh(o),
+                isSkinnedMesh(o),
+                (o as any).geometry instanceof THREE.BufferGeometry,
+            );
+
             if (
-                o instanceof THREE.Mesh &&
+                (isMesh(o) || isSkinnedMesh(o)) &&
                 o.geometry instanceof THREE.BufferGeometry
             ) {
+                console.log('メッシュだよ〜〜〜〜〜〜〜〜〜', o);
                 o.geometry.translate(-offset.x, -offset.y, -offset.z);
                 o.geometry.scale(scale, scale, scale);
                 o.updateMatrix();
