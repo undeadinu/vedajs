@@ -8,9 +8,9 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@types/three@^0.92.14":
-  version "0.92.14"
-  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.92.14.tgz#a9a4febad61b9e6ef6446b8151f1398ac6524dea"
+"@types/three@^0.92.22":
+  version "0.92.22"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.92.22.tgz#330440774a7c32e3139d7784be95db64b110489e"
   dependencies:
     "@types/webvr-api" "*"
 
